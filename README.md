@@ -390,17 +390,7 @@ Free for educational, research, and commercial use.
 
 ---
 
-## 👤 Author
 
-**Shivam Shukla**  
-*AI/ML Engineer | LLM Systems Developer | RAG Enthusiast*
-
-- 📧 Email: [your.email@example.com]
-- 💼 LinkedIn: [linkedin.com/in/yourprofile]
-- 🐙 GitHub: [@yourusername]
-- 🌐 Portfolio: [yourwebsite.com]
-
----
 
 ## 🙏 Acknowledgments
 
@@ -423,6 +413,10 @@ I'll share these files via Google Drive, Dropbox, or similar platforms.
 
 ---
 
+## 👤 Author
+
+**Shivam Shukla**  
+*AI/ML Engineer | LLM Systems Developer | RAG Enthusiast*
 
 ---
 
