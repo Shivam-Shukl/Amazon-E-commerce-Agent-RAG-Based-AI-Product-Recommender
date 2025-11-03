@@ -193,10 +193,10 @@ Try these natural language searches:
 
 | Screen | Description | Preview |
 |--------|-------------|---------|
-| 🏠 **Home Page** | Clean landing page with search interface | ![Home](screenshots/home_page.png) |
-| 🔍 **Search State** | Loading animation while processing query | ![Search](screenshots/searching.png) |
+| 🏠 **Home Page** | Clean landing page with search interface | ![Home](screenshots/Home_page.png) |
+| 🔍 **Search State** | Loading animation while processing query | ![Search](screenshots/Searching.png) |
 | 📦 **Product Results** | Grid layout showing matched products | ![Products](screenshots/products_list.png) |
-| 💡 **AI Insights** | Generated recommendation with reasoning | ![AI](screenshots/ai_recommendation.png) |
+| 💡 **AI Insights** | Generated recommendation with reasoning | ![AI](screenshots/Ai_recommendation.png) |
 
 ---
 
