@@ -171,10 +171,10 @@ This generates embeddings and saves them to `vectorstore/chroma.sqlite3`
 ### Run the Application
 
 ```bash
-streamlit run app.py
+python run app.py
 ```
 
-The app will open in your default browser at `http://localhost:8501`
+The app will open in your default browser at `http://localhost:5501`
 
 ### Example Queries
 
