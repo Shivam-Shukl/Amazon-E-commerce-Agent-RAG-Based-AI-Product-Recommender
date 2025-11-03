@@ -3,7 +3,6 @@
 > An **AI-powered e-commerce assistant** built using **Retrieval-Augmented Generation (RAG)** that recommends Amazon products based on natural language queries such as *"best smartwatch under ₹5000"* or *"top laptops for students under ₹60000"*.
 
 [![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)](https://www.python.org/)
-[![Streamlit](https://img.shields.io/badge/Streamlit-1.28+-red.svg)](https://streamlit.io/)
 [![ChromaDB](https://img.shields.io/badge/ChromaDB-Vector%20Store-green.svg)](https://www.trychroma.com/)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
