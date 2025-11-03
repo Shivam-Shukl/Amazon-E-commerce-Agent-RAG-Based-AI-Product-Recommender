@@ -1,0 +1,22 @@
+# Core Python dependencies
+python-dotenv
+pandas
+numpy
+
+# Notebooks + visualization
+jupyter
+tqdm
+
+# Embeddings + vector store
+chromadb
+sentence-transformers
+
+
+# OpenAI API
+# openai
+
+# Optional: Streamlit app UI
+flask
+
+# Utility
+scikit-learn
