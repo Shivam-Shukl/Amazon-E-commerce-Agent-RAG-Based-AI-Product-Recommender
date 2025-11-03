@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amazon AI Assistant</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(120deg, #667eea, #764ba2, #43cea2, #185a9d);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+
+        .tagline {
+            text-align: center;
+            color: white;
+            font-size: 0.95em;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            animation: fadeIn 1s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .search-box {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0 15px 45px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .input-wrapper {
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 16px 50px 16px 20px;
+            font-size: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.95);
+            transition: all 0.3s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.6);
+            background: white;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.2);
+        }
+
+        .mic-btn {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: all 0.3s;
+        }
+
+        .mic-btn:hover {
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .mic-btn:active {
+            transform: translateY(-50%) scale(0.95);
+        }
+
+        .search-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .search-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .search-btn:active {
+            transform: translateY(0);
+        }
+
+        .search-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .suggestions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        .suggestion-chip {
+            background: rgba(255, 255, 255, 0.25);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .suggestion-chip:hover {
+            background: rgba(255, 255, 255, 0.35);
+            transform: translateY(-2px);
+        }
+
+        .ai-response {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            display: none;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .ai-response h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.2em;
+        }
+
+        .ai-response p {
+            color: #333;
+            line-height: 1.8;
+            font-size: 15px;
+        }
+
+        .typing-cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1em;
+            background: #667eea;
+            margin-left: 2px;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 49% { opacity: 1; }
+            50%, 100% { opacity: 0; }
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .product-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: fadeInUp 0.6s ease;
+            animation-fill-mode: both;
+        }
+
+        .product-card:nth-child(1) { animation-delay: 0.1s; }
+        .product-card:nth-child(2) { animation-delay: 0.2s; }
+        .product-card:nth-child(3) { animation-delay: 0.3s; }
+        .product-card:nth-child(4) { animation-delay: 0.4s; }
+        .product-card:nth-child(5) { animation-delay: 0.5s; }
+        .product-card:nth-child(6) { animation-delay: 0.6s; }
+
+        .product-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.25);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            object-fit: contain;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            background: #f8f9fa;
+            transition: transform 0.3s;
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.05);
+        }
+
+        .product-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 12px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            min-height: 48px;
+        }
+
+        .product-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .product-price {
+            font-size: 22px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .product-rating {
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(255, 215, 0, 0.3);
+        }
+
+        .product-link {
+            display: block;
+            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .product-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .loading {
+            text-align: center;
+            color: white;
+            font-size: 18px;
+            display: none;
+            padding: 30px;
+        }
+
+        .spinner {
+            margin: 15px auto;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid #fff;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .error {
+            background: linear-gradient(135deg, #ff4444, #cc0000);
+            color: white;
+            padding: 18px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: none;
+            box-shadow: 0 4px 15px rgba(255, 68, 68, 0.3);
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .no-results {
+            text-align: center;
+            color: white;
+            font-size: 18px;
+            display: none;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        footer {
+            text-align: center;
+            color: white;
+            margin-top: 60px;
+            padding: 20px;
+            opacity: 0.9;
+            font-size: 14px;
+        }
+
+        footer a {
+            color: #ffd700;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        footer a:hover {
+            color: #ffed4e;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .search-box {
+                padding: 25px;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🛍️ Amazon AI Assistant</h1>
+            <p>Ask me anything about products!</p>
+        </div>
+
+        <p class="tagline">✨ Smart Amazon AI — Personalized product recommendations with real-time insights ✨</p>
+
+        <div class="search-box">
+            <div class="input-wrapper">
+                <input 
+                    type="text" 
+                    class="search-input" 
+                    id="searchInput"
+                    placeholder="e.g., best laptop under ₹60000"
+                    onkeypress="if(event.key === 'Enter') searchProducts()"
+                >
+                <button class="mic-btn" onclick="startVoiceSearch()" title="Voice search">
+                    🎤
+                </button>
+            </div>
+            <button class="search-btn" id="searchBtn" onclick="searchProducts()">
+                Search Products
+            </button>
+            <div class="suggestions">
+                <span class="suggestion-chip" onclick="fillSearch('best budget smartphones')">💡 best budget smartphones</span>
+                <span class="suggestion-chip" onclick="fillSearch('gaming laptops under ₹70000')">💡 gaming laptops under ₹70000</span>
+                <span class="suggestion-chip" onclick="fillSearch('wireless earphones with ANC')">💡 wireless earphones with ANC</span>
+            </div>
+        </div>
+
+        <div class="error" id="errorMsg"></div>
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>AI is fetching your results...</p>
+        </div>
+        <div class="no-results" id="noResults">
+            <h3>😔 No products found</h3>
+            <p>Try a different query or use our suggestions above!</p>
+        </div>
+
+        <div class="ai-response" id="aiResponse">
+            <h3>💡 AI Recommendation</h3>
+            <p id="aiText"></p>
+        </div>
+
+        <div class="products-grid" id="productsGrid"></div>
+    </div>
+
+    <footer>
+        <p>Built with ❤️ by Shivam Shukla | <a href="https://github.com/shivam-shukl" target="_blank">GitHub</a></p>
+    </footer>
+
+    <script>
+        // Voice search function
+        function startVoiceSearch() {
+            if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+                showError('Voice search is not supported in your browser');
+                return;
+            }
+
+            const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+            recognition.lang = 'en-IN';
+            recognition.start();
+
+            const micBtn = document.querySelector('.mic-btn');
+            micBtn.textContent = '🔴';
+
+            recognition.onresult = (event) => {
+                const transcript = event.results[0][0].transcript;
+                document.getElementById('searchInput').value = transcript;
+                micBtn.textContent = '🎤';
+                searchProducts();
+            };
+
+            recognition.onerror = () => {
+                micBtn.textContent = '🎤';
+                showError('Voice search failed. Please try again.');
+            };
+
+            recognition.onend = () => {
+                micBtn.textContent = '🎤';
+            };
+        }
+
+        // Fill search input with suggestion
+        function fillSearch(text) {
+            document.getElementById('searchInput').value = text;
+            searchProducts();
+        }
+
+        // Typing effect for AI response
+        function typeEffect(text, elementId, speed = 30) {
+            const el = document.getElementById(elementId);
+            el.innerHTML = '';
+            let i = 0;
+            
+            const cursor = document.createElement('span');
+            cursor.className = 'typing-cursor';
+            el.appendChild(cursor);
+            
+            const interval = setInterval(() => {
+                if (i < text.length) {
+                    el.textContent += text[i];
+                    el.appendChild(cursor);
+                    i++;
+                } else {
+                    clearInterval(interval);
+                    cursor.remove();
+                }
+            }, speed);
+        }
+
+        async function searchProducts() {
+            const query = document.getElementById('searchInput').value.trim();
+            const btn = document.getElementById('searchBtn');
+            const loading = document.getElementById('loading');
+            const errorMsg = document.getElementById('errorMsg');
+            const aiResponse = document.getElementById('aiResponse');
+            const productsGrid = document.getElementById('productsGrid');
+            const noResults = document.getElementById('noResults');
+
+            console.log('Search clicked, query:', query); // Debug log
+
+            if (!query) {
+                showError('Please enter a search query');
+                return;
+            }
+
+            // Reset UI
+            errorMsg.style.display = 'none';
+            aiResponse.style.display = 'none';
+            noResults.style.display = 'none';
+            productsGrid.innerHTML = '';
+            
+            // Show loading
+            loading.style.display = 'block';
+            btn.disabled = true;
+            btn.textContent = 'Searching...';
+
+            try {
+                console.log('Sending request...'); // Debug log
+                
+                const response = await fetch('http://localhost:5001/search', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ query })
+                });
+
+                console.log('Response status:', response.status); // Debug log
+
+                const data = await response.json();
+                console.log('Response data:', data); // Debug log
+
+                if (!data.success) {
+                    throw new Error(data.error || 'Search failed');
+                }
+
+                // Show AI response with typing effect
+                if (data.ai_response) {
+                    aiResponse.style.display = 'block';
+                    typeEffect(data.ai_response, 'aiText', 20);
+                }
+
+                // Show products
+                if (data.products && data.products.length > 0) {
+                    displayProducts(data.products);
+                } else {
+                    noResults.style.display = 'block';
+                }
+
+            } catch (error) {
+                console.error('Error:', error); // Debug log
+                showError('Error: ' + error.message);
+            } finally {
+                loading.style.display = 'none';
+                btn.disabled = false;
+                btn.textContent = 'Search Products';
+            }
+        }
+
+        function displayProducts(products) {
+            const grid = document.getElementById('productsGrid');
+            
+            products.forEach(product => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                
+                card.innerHTML = `
+                    ${product.image ? `<img src="${product.image}" alt="${product.name}" class="product-image" onerror="this.src='https://via.placeholder.com/200?text=No+Image'">` : ''}
+                    <div class="product-name">${product.name || 'Unknown Product'}</div>
+                    <div class="product-info">
+                        <span class="product-price">₹${product.discount_price || product.actual_price || 'N/A'}</span>
+                        <span class="product-rating">⭐ ${product.ratings || 'N/A'}</span>
+                    </div>
+                    <a href="${product.link || '#'}" target="_blank" class="product-link">View Product</a>
+                `;
+                
+                grid.appendChild(card);
+            });
+        }
+
+        function showError(message) {
+            const errorMsg = document.getElementById('errorMsg');
+            errorMsg.textContent = message;
+            errorMsg.style.display = 'block';
+            setTimeout(() => {
+                errorMsg.style.display = 'none';
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
