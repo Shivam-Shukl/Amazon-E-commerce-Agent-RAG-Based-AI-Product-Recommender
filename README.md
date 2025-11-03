@@ -71,7 +71,7 @@ Amazon_Ecommerce_Agent/
 │   ├── 03_query_retrieval_test.ipynb
 │   └── 04_rag_generation.ipynb
 │
-├── app.py                         # 🔥 Main Streamlit application
+├── app.py                         #  Main flask application
 ├── requirements.txt               # Python dependencies
 ├── LICENSE                        # MIT License
 └── README.md                      # Project documentation
