@@ -31,7 +31,7 @@ flowchart LR
     C --> D[Top-k Products]
     D --> E[RAG Generation]
     E --> F[AI Summary]
-    F --> G[Streamlit UI]
+    F --> G[Flask UI]
     D --> G
 ```
 
