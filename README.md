@@ -40,7 +40,7 @@ flowchart LR
 2. Query converted to semantic embeddings
 3. ChromaDB retrieves similar products via vector similarity
 4. Generation layer creates contextual summary
-5. Results displayed in interactive Streamlit interface
+5. Results displayed in interactive Flask app
 
 ---
 
@@ -87,7 +87,7 @@ Amazon_Ecommerce_Agent/
 | **Vector Store** | [ChromaDB](https://www.trychroma.com/) |
 | **Embeddings** | SentenceTransformer (`all-MiniLM-L6-v2`) |
 | **LLM/Generation** | OpenAI / Ollama / HuggingFace (optional) |
-| **Frontend** | Streamlit |
+| **Frontend** | Flask |
 | **Data Processing** | Pandas, NumPy |
 
 ---
@@ -242,7 +242,7 @@ Try these natural language searches:
 - ✅ Persistent ChromaDB vector store
 - ✅ Fast semantic search with SentenceTransformer
 - ✅ Complete RAG pipeline implementation
-- ✅ Interactive Streamlit UI with modern design
+- ✅ Interactive Flask UI with modern design
 - ✅ AI-generated product summaries
 - ✅ Responsive product card layout
 - ✅ Real-time search with loading states
@@ -253,7 +253,7 @@ Try these natural language searches:
 - 🔜 Product comparison feature
 - 🔜 Price tracking and alerts
 - 🔜 Multi-language support
-- 🔜 Deployment to Streamlit Cloud
+- 🔜 Deployment to Flask Cloud
 
 ---
 
@@ -275,7 +275,7 @@ User queries are embedded using the same model, then ChromaDB retrieves the top-
 A generation layer creates a natural language summary explaining why these products match the query.
 
 ### 6. UI Rendering
-Results are displayed in a beautiful Streamlit interface with product cards and AI insights.
+Results are displayed in a beautiful Flask interface with product cards and AI insights.
 
 ---
 
@@ -340,7 +340,7 @@ python -c "from chromadb import Client; client = Client(); print('✓ ChromaDB O
 python -c "from sentence_transformers import SentenceTransformer; model = SentenceTransformer('all-MiniLM-L6-v2'); print('✓ Model OK')"
 
 # Test app imports
-python -c "import streamlit; import pandas; print('✓ Dependencies OK')"
+python -c "import Flask; import pandas; print('✓ Dependencies OK')"
 ```
 
 ---
@@ -373,7 +373,7 @@ This project demonstrates:
 - ✅ Implementing semantic search
 - ✅ Creating interactive ML applications
 - ✅ End-to-end pipeline: data → embeddings → retrieval → generation
-- ✅ Modern web UI development with Streamlit
+- ✅ Modern web UI development with Flask
 
 **Perfect for:** ML engineers, data scientists, and developers learning about RAG systems and GenAI applications.
 
@@ -394,7 +394,7 @@ Free for educational, research, and commercial use.
 - **Dataset Source:** [Amazon Products Dataset](https://www.kaggle.com/datasets/lokeshparab/amazon-products-dataset) by Lokesh Parab on Kaggle
 - SentenceTransformers team for the embedding models
 - ChromaDB for the vector database
-- Streamlit for the amazing UI framework
+- Flask for the amazing UI framework
 - Amazon for product data inspiration
 
 ---
