@@ -5,7 +5,7 @@ from chromadb.utils import embedding_functions
 import pandas as pd
 
 # --- Configuration ---
-VECTOR_DB_PATH = "C:/Users/shiva/OneDrive/Documents/Material/Amazon_Ecommorce_agent/data/vectorstore/"
+VECTOR_DB_PATH = "path"
 COLLECTION_NAME = "products"
 EMBED_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
 
@@ -122,4 +122,5 @@ if __name__ == '__main__':
     print("🚀 Starting Amazon E-commerce Flask Server...")
     print("📱 Open your browser at: http://localhost:5000")
     print("="*50 + "\n")
+
     app.run(debug=True, host='127.0.0.1', port=5001)
